@@ -1,26 +1,20 @@
-#!/usr/bin/env python3
+"""import modules"""
 import json
 
 # Player info
-LEVEL = input("My Adventure Rank is:\n")
-LEVEL = int(LEVEL)
-
-CUR_EXP = input("Input your current EXP:\n")
-CUR_EXP = int(CUR_EXP)
-
-DAILY = input("Do daily mission every day?:\n Y(yes)/N(no)")
+LEVEL = int(input("My Adventure Rank is: "))
+CUR_EXP = int(input("Input your current EXP: "))
+DAILY = input("Do daily mission every day? (Y/N): ")
 DAILY_EXP = 0
-if DAILY.upper() == "Y" or "YES":
+if DAILY.upper() == "Y" or DAILY.upper() == "YES":
     DAILY_EXP = 500 + (4 * 250)
     DO_DAILY = "doing daily"
 else:
     DAILY_EXP = 0
-    DO_DAILY = "not do daily"
+    DO_DAILY = "not doing daily"
 
-REFILL_RESIN = input("How many times u refill resin? (0-6)times:\n")
-
-EXPECT_LVL = input("AR that you wanna reach:\n")
-EXPECT_LVL = int(EXPECT_LVL)
+REFILL_RESIN = int(input("How many times you refill resin? (0-6) times: "))
+EXPECT_LVL = int(input("AR that you want to reach: "))
 
 # Code
 with open('artable.json', 'r', encoding='utf-8') as file:
@@ -33,9 +27,10 @@ RESIN_PD = RESIN_PD / 20 * EXP_RESIN
 REFILL_EXP = max(min(REFILL_RESIN, 6), 0) * (3 * EXP_RESIN)
 
 EGPD = DAILY_EXP + RESIN_PD + REFILL_EXP
-TOTAL = ARTABLE[EXPECT_LVL] - ARTABLE[LEVEL] - CUR_EXP
-
-print("Current AR:", LEVEL, "Exp:", CUR_EXP)
+TOTAL = ARTABLE[str(EXPECT_LVL)] - ARTABLE[str(LEVEL)] - CUR_EXP
+M = TOTAL//(EGPD*30)
+D = TOTAL//EGPD
+print("Current AR:", LEVEL, "\nExp:", CUR_EXP)
 print("Total Exp required:", TOTAL)
-print("if you", DO_DAILY, "and REFILL RESIN", REFILL_RESIN, "times, then")
-print("Est. days until AR", str(EXPECT_LVL) + ",", TOTAL / EGPD)
+print("If you are", DO_DAILY, "and refill resin", REFILL_RESIN, "times, then")
+print("Est. time until AR", str(EXPECT_LVL), "is", "≈", M, "months or", "≈", D, "days")
